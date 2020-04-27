@@ -1,0 +1,35 @@
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# Tests
+.nyc_output/
+coverage/
+
+# ENV
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+.tmp/
+tmp/
+
+# Compilers
+build/
+
+# Dependencies
+node_modules/
+.config/
+.npm/
+
+# Template files
+.DS_Store

@@ -1,0 +1,14 @@
+{
+  "name": "dinosaurs",
+  "version": "0.0.1",
+  "description": "print the names of only the bipedal dinosaurs from fastest to slowest.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Voltlol",
+  "license": "ISC",
+  "dependencies": {
+    "csv": "^5.3.2"
+  }
+}
