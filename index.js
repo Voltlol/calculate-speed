@@ -42,12 +42,12 @@ csvProcessor(additionalDinoInfo, (err, data) => {
                 const legLength = data[i][1]
                 dinos.push({ 
                     name: data[i][0], 
-                    speed: ((strideLength / legLength - 1) * Math.sqrt(legLength * 9.81)).toFixed(3)
+                    speed: (strideLength / legLength - 1) * Math.sqrt(legLength * 9.81)
                 });
             }
         }
         dinos.sort((a, b) => a.speed - b.speed).reverse().forEach(dino => {
-            console.log(`${dino.name}: ${dino.speed}`)
+            console.log(dino.name)
         })
     })
 })
