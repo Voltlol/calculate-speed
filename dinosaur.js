@@ -12,6 +12,6 @@ module.exports = class Dinosaur {
         return this.calculateSpeed();
       }
     calculateSpeed(){
-        return ((this.strideLength / this.legLength) - 1) * Math.sqrt(this.legLength * 9.2)
+        return ((this.strideLength / this.legLength) - 1) * Math.sqrt(this.legLength * 9.81)
     }
 }
