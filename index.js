@@ -37,7 +37,9 @@ fs.readFile(file1,(err, data1) => {
                     }
                 })
                 dinosaurs.sort((a, b) => a.speed - b.speed).reverse().forEach(dino => {
-                    if(!Number.isNaN(dino.speed)) console.log(dino.name)
+                    if (dino.stance == 'bipedal' && !Number.isNaN(dino.speed)){
+                        console.log(dino.name)
+                    }
                 })
             })
         })
