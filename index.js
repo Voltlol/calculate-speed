@@ -2,7 +2,6 @@
 // import modules
 const fs = require('fs');
 const csv = require('csv');
-const Dinosaur = require('./dinosaur')
 
 
 if (!process.argv[2] || !process.argv[3]){
@@ -12,36 +11,43 @@ if (!process.argv[2] || !process.argv[3]){
 function errHandler(err){
     if(err) return console.error(err)
 }
-const file1 = process.argv[2]
-const file2 = process.argv[3]
+const dinoInfo = process.argv[2]
+const additionalDinoInfo = process.argv[3]
 
 
-fs.readFile(file1,(err, data1) => {
-    errHandler(err);
-    fs.readFile(file2, (err, data2) => {
+function csvProcessor(filename, callback){
+    fs.readFile(filename, (err, data) => {
         errHandler(err);
-        csv.parse(data1, (err, parsedData1) => {
+        csv.parse(data, (err, parsedData) => {
             errHandler(err);
-            csv.parse(data2, (err, parsedData2) => {
-                let dinosaurs = []
-                errHandler(err);
-                for (let i = 1; i < parsedData2.length; i++){
-                    dinosaurs.push(new Dinosaur(parsedData2[i][0], 'undefined',parsedData2[i][1], 'undefined',parsedData2[i][2]))
-                }
-                dinosaurs.forEach(dinosaur => {
-                    for (let j=1; j < parsedData1.length; j++){
-                        if(dinosaur.name === parsedData1[j][0]){
-                            dinosaur.legLength = parsedData1[j][1]
-                            dinosaur.diet = parsedData1[j][2]
-                        }
-                    }
-                })
-                dinosaurs.sort((a, b) => a.speed - b.speed).reverse().forEach(dino => {
-                    if (dino.stance == 'bipedal' && !Number.isNaN(dino.speed)){
-                        console.log(dino.name)
-                    }
-                })
-            })
+            return callback(null, parsedData)
+        })
+    })
+}
+
+csvProcessor(additionalDinoInfo, (err, data) => {
+    const bipedalDinosaurs = {}
+    errHandler(err);
+    for (let i = 1; i < data.length; i++){
+        if(data[i][2] == 'bipedal'){
+            bipedalDinosaurs[data[i][0]] = data[i][1]
+        }
+    }
+    csvProcessor(dinoInfo, (err, data) => {
+        errHandler(err);
+        const dinos = []
+        for (let i = 1; i < data.length; i++){
+            if(data[i][0] in bipedalDinosaurs){
+                const strideLength = bipedalDinosaurs[data[i][0]]
+                const legLength = data[i][1]
+                dinos.push({ 
+                    name: data[i][0], 
+                    speed: (strideLength / legLength - 1) * Math.sqrt(legLength * 9.81)
+                });
+            }
+        }
+        dinos.sort((a, b) => a.speed - b.speed).reverse().forEach(dino => {
+            console.log(dino.name)
         })
     })
 })

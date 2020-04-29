@@ -1,6 +1,6 @@
 {
   "name": "dinosaurs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "print the names of only the bipedal dinosaurs from fastest to slowest.",
   "main": "index.js",
   "scripts": {
